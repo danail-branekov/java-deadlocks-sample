@@ -2,6 +2,8 @@ package deadlock_recovery.thread_stop;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadMXBean;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.concurrent.TimeUnit;
 
 public class DeadlockArbitrator {
@@ -19,10 +21,31 @@ public class DeadlockArbitrator {
 				throw new IllegalStateException("Could not find thread");
 			}
 			System.out.println(String.format("Stopping thread [%s]", t.getName()));
-			t.stop(new DeadlockVictimError(t));
+			doStopThread(t);
 			unit.sleep(timeout);
 		}
 		return false;
+	}
+
+	private void doStopThread(Thread t) {
+		// Invoking Thread.stop() with Oracle JDK8 throws
+		// UnsupportedOperationException. Therefore we are invoking
+		// Thread.stop0() via reflection :)
+		//
+		// t.stop(new DeadlockVictimError(t));
+		try {
+			Method stopMethod = Thread.class.getDeclaredMethod("stop0", Object.class);
+			stopMethod.setAccessible(true);
+			stopMethod.invoke(t, new DeadlockVictimError(t));
+		} catch (NoSuchMethodException e) {
+			throw new IllegalStateException(e);
+		} catch (InvocationTargetException e) {
+			throw new IllegalStateException(e);
+		} catch (IllegalAccessException e) {
+			throw new IllegalStateException(e);
+		} catch (IllegalArgumentException e) {
+			throw new IllegalStateException(e);
+		}
 	}
 
 	public boolean tryResolveDeadlock() throws InterruptedException {
