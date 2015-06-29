@@ -21,9 +21,9 @@ public class DeadlockRecoveryTest_ThreadInterrupt {
 			public void deadlockDetected(Thread[] deadlockedThreads) {
 				System.out.println("Deadlock detected, trying to recover");
 				try {
-					System.out.println("Deadlock resultion result: " + deadlockArbitrator.tryResolveDeadlock());
+					System.out.println("Deadlock recovery result: " + deadlockArbitrator.tryResolveDeadlock());
 				} catch (InterruptedException e) {
-					System.out.println("Deadlock resolution was interrupted");
+					System.out.println("Deadlock recovery was interrupted");
 				}
 			}
 		});
