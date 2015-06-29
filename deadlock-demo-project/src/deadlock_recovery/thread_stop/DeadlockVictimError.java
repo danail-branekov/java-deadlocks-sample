@@ -1,6 +1,8 @@
 package deadlock_recovery.thread_stop;
 
 public class DeadlockVictimError extends Error {
+	private static final long serialVersionUID = -4897954945525669689L;
+
 	private final Thread victim;
 
 	public DeadlockVictimError(Thread victim) {

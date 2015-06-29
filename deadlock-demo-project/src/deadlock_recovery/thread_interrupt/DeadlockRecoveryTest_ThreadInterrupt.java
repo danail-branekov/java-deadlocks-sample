@@ -10,12 +10,12 @@ import org.junit.Test;
 import tools.ThreadDeadlockDetector;
 import tools.ThreadDeadlockDetector.Listener;
 
-public class DeadlockRecoveryTest {
+public class DeadlockRecoveryTest_ThreadInterrupt {
 	@Test
 	public void testDeadlockReconveryWithInterrupt() throws InterruptedException {
 		final ThreadDeadlockDetector deadlockDetector = new ThreadDeadlockDetector();
 		deadlockDetector.addListener(new Listener() {
-			final DeadlockArbitrator deadlockArbitrator = new DeadlockArbitrator();
+			final ThreadInterruptingDeadlockArbitrator deadlockArbitrator = new ThreadInterruptingDeadlockArbitrator();
 
 			@Override
 			public void deadlockDetected(Thread[] deadlockedThreads) {

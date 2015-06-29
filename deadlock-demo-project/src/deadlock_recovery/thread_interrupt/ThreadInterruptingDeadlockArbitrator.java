@@ -4,7 +4,7 @@ import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadMXBean;
 import java.util.concurrent.TimeUnit;
 
-public class DeadlockArbitrator {
+public class ThreadInterruptingDeadlockArbitrator {
 	private static final ThreadMXBean tmb = ManagementFactory.getThreadMXBean();
 
 	public boolean tryResolveDeadlock(int attempts, long timeout, TimeUnit unit) throws InterruptedException {

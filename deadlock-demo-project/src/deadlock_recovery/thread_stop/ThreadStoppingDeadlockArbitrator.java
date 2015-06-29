@@ -6,7 +6,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.concurrent.TimeUnit;
 
-public class DeadlockArbitrator {
+public class ThreadStoppingDeadlockArbitrator {
 	private static final ThreadMXBean tmb = ManagementFactory.getThreadMXBean();
 
 	public boolean tryResolveDeadlock(int attempts, long timeout, TimeUnit unit) throws InterruptedException {
