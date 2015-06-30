@@ -1,4 +1,4 @@
-package taxi.deadlock_free;
+package taxi.deadlock_free_v1;
 
 import java.util.concurrent.ExecutionException;
 

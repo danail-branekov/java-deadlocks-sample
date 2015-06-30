@@ -1,4 +1,4 @@
-package taxi.deadlock_free;
+package taxi.deadlock_free_v2;
 
 public class TaxiObserver implements Runnable {
 	private final Dispatcher dispather;

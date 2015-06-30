@@ -1,4 +1,4 @@
-package taxi.deadlock_free;
+package taxi.deadlock_free_v2;
 
 import java.awt.Point;
 import java.util.ArrayList;
@@ -36,7 +36,8 @@ public class TaxiCompany {
 
 	public void run() throws InterruptedException, ExecutionException {
 		ExecutorService exec = Executors.newCachedThreadPool();
-		CompletionService<String> results = new ExecutorCompletionService<String>(exec);
+		CompletionService<String> results = new ExecutorCompletionService<String>(
+				exec);
 		results.submit(this.taxiObserver, "Observer is done");
 		results.submit(this.taxiDriver, "Taxi driver is done");
 

@@ -1,12 +1,13 @@
-package taxi.deadlock_free;
+package taxi.deadlock_free_v2;
 
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
 /**
- * This Dispatcher implementation would use an open call when invoking the alien
- * Taxi.getLocation method thus avoiding the deadlock.<br>
+ * This Dispatcher implementation would invoke the alien method Taxi.setLocation
+ * while holding the own monitor. This can potentially cause a deadlock
+ *
  */
 public class Dispatcher {
 	private final Set<Taxi> taxis;
@@ -21,13 +22,9 @@ public class Dispatcher {
 		availableTaxis.add(taxi);
 	}
 
-	public Image getImage() {
-		Set<Taxi> copy;
-		synchronized (this) {
-			copy = new HashSet<>(taxis);
-		}
+	public synchronized Image getImage() {
 		Image image = new Image();
-		copy.forEach(taxi -> image.drawMarker(taxi.getLocation()));
+		taxis.forEach(taxi -> image.drawMarker(taxi.getLocation()));
 		return image;
 	}
 }
