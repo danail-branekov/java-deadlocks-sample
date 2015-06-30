@@ -6,15 +6,11 @@ import java.awt.Point;
  * This Taxi implementation uses an open call in its setLocation method - the
  * method is not synchronized, i.e. own lock is not held while being executed.
  * The own lock is held for a short period while updating the location field is
- * performed and is then released prior invoking the alien dispatcher method<br>
- * Further on, the location field is volatile which guarantees that all threads
- * accessing the Taxi object would "see" the correct taxi location rather than a
- * cached value. Thus we no longer need method getLocation to be synchronized
+ * performed and is then released prior invoking the alien dispatcher method
  */
 public class Taxi {
 	private static final int SET_LOCATION_DELAY = 1;
-	private volatile Point location;
-	private Point destination;
+	private Point location, destination;
 	private Dispatcher dispatcher;
 
 	public void setDispatcher(Dispatcher dispatcher) {
@@ -25,7 +21,7 @@ public class Taxi {
 		this.destination = destination;
 	}
 
-	public Point getLocation() {
+	public synchronized Point getLocation() {
 		return location;
 	}
 
